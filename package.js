@@ -17,6 +17,7 @@ Package.onUse(function(api) {
   api.addFiles([
     'source/classes/depend_on.coffee',
     'source/modules/to_map.coffee',
+    'source/modules/to_create.coffee',
   ]);
 
 });
@@ -33,6 +34,7 @@ Package.onTest(function(api) {
   api.addFiles([
     'tests/classes/depend_on.integration.coffee',
     'tests/modules/to_map.integration.coffee',
+    'tests/modules/to_create.integration.coffee',
   ]);
 
 });
