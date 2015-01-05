@@ -1,17 +1,17 @@
 Package.describe({
   summary: 'Helpers for Testing Space Applications and Modules.',
   name: 'space:testing',
-  version: '1.1.0',
+  version: '1.1.1',
   git: 'https://github.com/CodeAdventure/space-testing.git'
 });
 
 Package.onUse(function(api) {
 
-  api.versionsFrom("METEOR@0.9.4");
+  api.versionsFrom("METEOR@1.0");
 
   api.use([
     'coffeescript',
-    'spacejamio:munit@2.0.2',
+    'practicalmeteor:munit@2.0.2',
   ]);
 
   api.addFiles([
@@ -28,7 +28,7 @@ Package.onTest(function(api) {
     'coffeescript',
     'space:base',
     'space:testing',
-    'spacejamio:munit@2.0.2',
+    'practicalmeteor:munit@2.0.2',
   ]);
 
   api.addFiles([
