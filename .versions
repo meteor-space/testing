@@ -13,7 +13,7 @@ geojson-utils@1.0.2
 id-map@1.0.2
 jquery@1.0.2
 json@1.0.2
-local-test:space:testing@1.1.1
+local-test:space:testing@1.2.1
 logging@1.0.6
 meteor@1.1.4
 minimongo@1.0.6
@@ -26,7 +26,7 @@ practicalmeteor:sinon@1.10.3_2
 random@1.0.2
 retry@1.0.2
 space:base@1.0.0
-space:testing@1.1.1
+space:testing@1.2.1
 test-helpers@1.0.3
 tinytest@1.0.4
 tracker@1.0.4
