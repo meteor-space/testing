@@ -19,6 +19,7 @@ Package.onUse(function(api) {
     'source/classes/extend.coffee',
     'source/modules/to_map.coffee',
     'source/modules/to_create.coffee',
+    'source/sinon/to_match.coffee',
   ]);
 
 });
@@ -37,6 +38,7 @@ Package.onTest(function(api) {
     'tests/classes/extend.spec.coffee',
     'tests/modules/to_map.integration.coffee',
     'tests/modules/to_create.integration.coffee',
+    'tests/sinon/to_match.integration.coffee',
   ]);
 
 });
