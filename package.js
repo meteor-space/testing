@@ -1,7 +1,7 @@
 Package.describe({
   summary: 'Helpers for Testing Space Applications and Modules.',
   name: 'space:testing',
-  version: '1.2.1',
+  version: '1.3.0',
   git: 'https://github.com/CodeAdventure/space-testing.git'
 });
 
