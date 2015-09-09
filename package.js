@@ -21,6 +21,7 @@ Package.onUse(function(api) {
     'source/modules/to_map.coffee',
     'source/modules/to_create.coffee',
     'source/sinon/to_match.coffee',
+    'source/event-sourcing/aggregates.coffee',
   ]);
 
 });
@@ -29,7 +30,9 @@ Package.onTest(function(api) {
 
   api.use([
     'coffeescript',
+    'check',
     'space:base',
+    'space:event-sourcing@1.1.0',
     'space:testing',
     'practicalmeteor:munit@2.1.4',
   ]);
@@ -40,6 +43,7 @@ Package.onTest(function(api) {
     'tests/modules/to_map.integration.coffee',
     'tests/modules/to_create.integration.coffee',
     'tests/sinon/to_match.integration.coffee',
+    'tests/event-sourcing/aggregates.spec.coffee',
   ]);
 
 });
