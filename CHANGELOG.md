@@ -1,6 +1,15 @@
 Changelog
 =========
 
+### 1.4.0
+Introduces aggregate tests in nice BDD style like this:
+```coffeescript
+TestAggregate(@list)
+.Given([new TodoAdded sourceId: @id, todoId: '1', title: 'first' ])
+.When(new AddTodo id: '2', title: 'second' )
+.ThenFailWith(new TooManyItems(@maxItems, @title))
+```
+
 ### 1.2.1
 
 Adds `to.extend` assertion for Coffeescript classes.
