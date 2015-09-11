@@ -3,9 +3,18 @@
 
 # ============== COMMANDS ============== #
 
+class CreateTodoList extends Command
+  @type 'CreateTodoList'
+  @fields: {
+    targetId: String
+    title: String
+    maxItems: Match.Integer
+  }
+
 class AddTodo extends Command
   @type 'AddTodo'
   @fields: {
+    targetId: String
     id: String
     title: String
   }
@@ -48,12 +57,11 @@ class TodoList extends Space.eventSourcing.Aggregate
   _items: null
   _maxItems: 0
 
-  constructor: (id, title, maxItems) ->
-    super(id)
+  initialize: (command) ->
     @record new TodoListCreated {
-      sourceId: id
-      title: title
-      maxItems: maxItems
+      sourceId: @getId()
+      title: command.title
+      maxItems: command.maxItems
     }
 
   @handle TodoListCreated, (event) ->
@@ -80,21 +88,31 @@ describe 'Space.testing - aggregates', ->
     @id = '123'
     @title = 'testList'
     @maxItems = 1
-    @list = new TodoList @id, @title, 1
 
   it 'can be used to test resulting events', ->
     todoId = '2'
     todoTitle = 'test'
-    TestAggregate(@list)
-    .Given()
-    .When(new AddTodo id: todoId, title: todoTitle )
+    TestAggregate(TodoList)
+    .Given(
+      new CreateTodoList targetId: @id, title: @title, maxItems: @maxItems
+    )
+    .When([
+      new AddTodo targetId: @id, id: todoId, title: todoTitle
+    ])
     .Expect([
       new TodoListCreated(sourceId: @id, title: @title, maxItems: @maxItems)
       new TodoAdded(sourceId: @id, todoId: todoId, title: todoTitle)
     ])
 
   it 'supports testing errors', ->
-    TestAggregate(@list)
-    .Given([new TodoAdded sourceId: @id, todoId: '1', title: 'first' ])
-    .When(new AddTodo id: '2', title: 'second' )
-    .ExpectToFailWith(new TooManyItems(@maxItems, @title))
+    TestAggregate(TodoList)
+    .Given([
+      new TodoListCreated(sourceId: @id, title: @title, maxItems: @maxItems)
+      new TodoAdded(sourceId: @id, todoId: '1', title: 'first')
+    ])
+    .When([
+      new AddTodo(targetId: @id, id: '2', title: 'second')
+    ])
+    .ExpectToFailWith(
+      new TooManyItems(@maxItems, @title)
+    )

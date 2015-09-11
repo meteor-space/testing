@@ -32,7 +32,7 @@ Package.onTest(function(api) {
     'coffeescript',
     'check',
     'space:base',
-    'space:event-sourcing@1.1.0',
+    'space:event-sourcing@1.2.2',
     'space:testing',
     'practicalmeteor:munit@2.1.4',
   ]);

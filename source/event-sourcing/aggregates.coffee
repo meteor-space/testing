@@ -1,22 +1,29 @@
 
 class AggregateTest
 
+  _aggregateClass: null
   _aggregate: null
-  _command: null
+  _commands: null
 
-  constructor: (@_aggregate) ->
+  constructor: (@_aggregateClass) ->
 
-  Given: (events) ->
-    @_aggregate.replayHistory(events) if events?
+  Given: (data) ->
+    if _.isArray(data)
+      @_aggregate = @_aggregateClass.createFromHistory(data)
+    else if data instanceof Space.messaging.Command
+      @_aggregate = new @_aggregateClass(data)
     return this
 
-  When: (@_command) -> return this
+  When: (@_commands) -> return this
 
   Expect: (expectedEvents) ->
-    @_aggregate.handle(@_command) if @_command?
+    @_applyCommandsToAggregate()
     expect(@_aggregate.getEvents()).toMatch expectedEvents
 
   ExpectToFailWith: (expectedError) ->
-    expect(=> @_aggregate.handle @_command).to.throw expectedError.message
+    expect(@_applyCommandsToAggregate).to.throw expectedError.message
+
+  _applyCommandsToAggregate: =>
+    @_aggregate.handle(command) for command in @_commands when @_commands?
 
 @TestAggregate = (aggregate) -> new AggregateTest aggregate
