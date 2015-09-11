@@ -88,7 +88,7 @@ describe 'Space.testing - aggregates', ->
     TestAggregate(@list)
     .Given()
     .When(new AddTodo id: todoId, title: todoTitle )
-    .Then([
+    .Expect([
       new TodoListCreated(sourceId: @id, title: @title, maxItems: @maxItems)
       new TodoAdded(sourceId: @id, todoId: todoId, title: todoTitle)
     ])
@@ -97,4 +97,4 @@ describe 'Space.testing - aggregates', ->
     TestAggregate(@list)
     .Given([new TodoAdded sourceId: @id, todoId: '1', title: 'first' ])
     .When(new AddTodo id: '2', title: 'second' )
-    .ThenFailWith(new TooManyItems(@maxItems, @title))
+    .ExpectToFailWith(new TooManyItems(@maxItems, @title))

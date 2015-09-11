@@ -12,11 +12,11 @@ class AggregateTest
 
   When: (@_command) -> return this
 
-  Then: (expectedEvents) ->
-    @_aggregate.handle @_command
+  Expect: (expectedEvents) ->
+    @_aggregate.handle(@_command) if @_command?
     expect(@_aggregate.getEvents()).toMatch expectedEvents
 
-  ThenFailWith: (expectedError) ->
+  ExpectToFailWith: (expectedError) ->
     expect(=> @_aggregate.handle @_command).to.throw expectedError.message
 
 @TestAggregate = (aggregate) -> new AggregateTest aggregate
