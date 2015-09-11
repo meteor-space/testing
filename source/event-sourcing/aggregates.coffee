@@ -24,6 +24,6 @@ class AggregateTest
     expect(@_applyCommandsToAggregate).to.throw expectedError.message
 
   _applyCommandsToAggregate: =>
-    @_aggregate.handle(command) for command in @_commands when @_commands?
+    @_aggregate.handle(command) for command in @_commands if @_commands?
 
 @TestAggregate = (aggregate) -> new AggregateTest aggregate
