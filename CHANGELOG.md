@@ -1,6 +1,9 @@
 Changelog
 =========
 
+### 1.4.2
+Heavily improves the API for BDD aggregate testing.
+
 ### 1.4.1
 Use `.Expect` instead of `.Then` for BDD style aggregate tests.
 
