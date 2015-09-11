@@ -1,6 +1,9 @@
 Changelog
 =========
 
+### 1.4.3
+Fixes bug with BDD aggregate style when no commands are applied to the aggregate
+
 ### 1.4.2
 Heavily improves the API for BDD aggregate testing.
 
