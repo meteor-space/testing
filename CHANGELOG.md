@@ -1,6 +1,9 @@
 Changelog
 =========
 
+### 1.4.1
+Use `.Expect` instead of `.Then` for BDD style aggregate tests.
+
 ### 1.4.0
 Introduces aggregate tests in nice BDD style like this:
 ```coffeescript
