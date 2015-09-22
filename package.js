@@ -12,6 +12,7 @@ Package.onUse(function(api) {
 
   api.use([
     'coffeescript',
+    'underscore',
     'practicalmeteor:munit@2.1.4',
   ]);
 
