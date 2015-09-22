@@ -1,5 +1,7 @@
 Changelog
 =========
+### 1.4.4
+Adds dependency on underscore to fix problems.
 
 ### 1.4.3
 Fixes bug with BDD aggregate style when no commands are applied to the aggregate
