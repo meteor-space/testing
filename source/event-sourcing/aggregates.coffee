@@ -42,7 +42,9 @@ class AggregateTest
 
     return this
 
-  when: (@_commands) -> return this
+  when: (commands) ->
+    @_commands = @_commands.concat commands
+    return this
 
   expect: (expectedEvents) ->
     @_eventBus.onPublish @_addPublishedEvents
@@ -58,5 +60,5 @@ class AggregateTest
 
   _cleanup: -> @clock.restore()
 
-  _sendCommandsThroughApp: ->
+  _sendCommandsThroughApp: =>
     @_app.send(command) for command in @_commands
