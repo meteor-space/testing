@@ -1,14 +1,14 @@
 
-Space.Application.testAggregate = (aggregateClass) ->
-
+Space.Application.given = ->
   # Setup the test app
   app = new this()
   app.injector.get('Space.eventSourcing.Configuration').useInMemoryCollections = true
   app.start()
+  test = new MessagesIntegrationTest app
+  test.given.apply test, arguments
+  return test
 
-  return new AggregateTest app, aggregateClass
-
-class AggregateTest
+class MessagesIntegrationTest
 
   _app: null
   _aggregateClass: null
@@ -18,7 +18,7 @@ class AggregateTest
   _eventBus: null
   _publishedEvents: null
 
-  constructor: (@_app, @_aggregateClass) ->
+  constructor: (@_app) ->
     @_app.reset() # Cleanup all existing collection data
     @clock = sinon.useFakeTimers('Date')
     @_commands = []
