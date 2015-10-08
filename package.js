@@ -32,6 +32,7 @@ Package.onTest(function(api) {
   api.use([
     'coffeescript',
     'check',
+    'underscore',
     'space:base',
     'space:event-sourcing@1.2.2',
     'space:testing',
