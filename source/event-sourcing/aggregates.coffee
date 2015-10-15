@@ -1,10 +1,6 @@
 
-Space.Application.given = ->
-  # Setup the test app
-  app = new this()
-  app.injector.get('Space.eventSourcing.Configuration').useInMemoryCollections = true
-  app.start()
-  test = new MessagesIntegrationTest app
+Space.Application::given = ->
+  test = new MessagesIntegrationTest this
   test.given.apply test, arguments
   return test
 
@@ -13,16 +9,18 @@ class MessagesIntegrationTest
   _app: null
   _aggregateClass: null
   _aggregate: null
-  _commands: null
+  _messages: null
   _commitStore: null
   _eventBus: null
   _publishedEvents: null
+  _expectation: null
+  _expectedEvents: null
 
   constructor: (@_app) ->
-    @_app.reset() # Cleanup all existing collection data
-    @clock = sinon.useFakeTimers('Date')
-    @_commands = []
+    @fakeDates = sinon.useFakeTimers('Date')
+    @_messages = []
     @_publishedEvents = []
+    @_expectedEvents = []
     @_commitStore = @_app.injector.get 'Space.eventSourcing.CommitStore'
     @_eventBus = @_app.injector.get 'Space.messaging.EventBus'
 
@@ -38,27 +36,43 @@ class MessagesIntegrationTest
     else if data instanceof Space.messaging.Command
       # We just send the command through the app and let
       # it handle the creation and saving of the aggregate
-      @_commands.push data
+      @_messages.push data
 
     return this
 
-  when: (commands) ->
-    @_commands = @_commands.concat commands
+  when: (messages) ->
+    @_messages = @_messages.concat messages
     return this
 
   expect: (expectedEvents) ->
-    @_eventBus.onPublish @_addPublishedEvents
-    @_sendCommandsThroughApp()
-    expect(@_publishedEvents).toMatch expectedEvents
-    @_cleanup()
+    if _.isFunction(expectedEvents)
+      @_expectedEvents = expectedEvents()
+    else
+      @_expectedEvents = expectedEvents
+    @_test = =>
+      @_sendMessagesThroughApp()
+      expect(@_publishedEvents).toMatch @_expectedEvents
+    @_run()
 
   expectToFailWith: (expectedError) ->
-    expect(@_sendCommandsThroughApp).to.throw expectedError.message
+    @_test = => expect(@_sendMessagesThroughApp).to.throw expectedError.message
+    @_run()
+
+  _run: ->
+    @_eventBus.onPublish @_addPublishedEvents
+    @_test()
     @_cleanup()
 
-  _addPublishedEvents: (event) => @_publishedEvents.push event
+  _addPublishedEvents: (event) =>
+    @_publishedEvents.push(event) if not @_isSendingTestMessages
 
-  _cleanup: -> @clock.restore()
+  _cleanup: ->
+    @fakeDates.restore()
+    @_app.reset()
 
-  _sendCommandsThroughApp: =>
-    @_app.send(command) for command in @_commands
+  _sendMessagesThroughApp: =>
+    for message in @_messages
+      if message instanceof Space.messaging.Command
+        @_app.send(message)
+      else
+        @_app.publish(message, ignoreHooks: true)
