@@ -87,9 +87,21 @@ class TodoListRouter extends Space.eventSourcing.Router
   RouteCommands: [AddTodo]
 
 class TodoListApplication extends Space.Application
+
   RequiredModules: ['Space.eventSourcing']
+
+  Configuration: {
+    appId: 'TodoListApplication'
+    eventSourcing: {
+      commitsCollection: new Mongo.Collection('test_commits_collection')
+    }
+  }
+
   configure: -> @injector.map(TodoListRouter).asSingleton()
-  startup: -> @injector.create(TodoListRouter)
+
+  startup: ->
+    @reset()
+    @injector.create(TodoListRouter)
 
 describe 'Space.testing - aggregates', ->
 
@@ -97,13 +109,15 @@ describe 'Space.testing - aggregates', ->
     @id = '123'
     @title = 'testList'
     @maxItems = 1
-    @TodoListTest = TodoListApplication.testAggregate(TodoList)
+    @app = new TodoListApplication()
+    @app.start()
 
   it 'can be used to test resulting events', ->
+
     todoId = '2'
     todoTitle = 'test'
-    @TodoListTest
-    .given(
+
+    @app.given(
       new CreateTodoList targetId: @id, title: @title, maxItems: @maxItems
     )
     .when([
@@ -125,8 +139,8 @@ describe 'Space.testing - aggregates', ->
     ])
 
   it 'supports testing errors', ->
-    @TodoListTest
-    .given([
+
+    @app.given([
       new TodoListCreated(
         sourceId: @id
         version: 1
