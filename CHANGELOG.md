@@ -1,5 +1,9 @@
 Changelog
 =========
+
+### 1.5.0
+Adds improved BDD style api for event-sourced applications.
+
 ### 1.4.4
 Adds dependency on underscore to fix problems.
 

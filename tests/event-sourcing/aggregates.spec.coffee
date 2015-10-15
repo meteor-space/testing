@@ -6,7 +6,6 @@
 class CreateTodoList extends Command
   @type 'CreateTodoList'
   @fields: {
-    targetId: String
     title: String
     maxItems: Match.Integer
   }
@@ -14,7 +13,6 @@ class CreateTodoList extends Command
 class AddTodo extends Command
   @type 'AddTodo'
   @fields: {
-    targetId: String
     id: String
     title: String
   }
@@ -24,7 +22,6 @@ class AddTodo extends Command
 class TodoListCreated extends Event
   @type 'TodoListCreated'
   @fields: {
-    sourceId: String
     title: String
     maxItems: Match.Integer
   }
@@ -32,7 +29,6 @@ class TodoListCreated extends Event
 class TodoAdded extends Event
   @type 'TodoAdded'
   @fields: {
-    sourceId: String
     todoId: String
     title: String
   }
@@ -40,7 +36,6 @@ class TodoAdded extends Event
 class TodoRemoved extends Event
   @type 'TodoRemoved'
   @fields: {
-    sourceId: String
     todoId: String
   }
 
@@ -57,17 +52,14 @@ class TodoList extends Space.eventSourcing.Aggregate
   _items: null
   _maxItems: 0
 
-  initialize: (command) ->
+  # ======= COMMANDS ======== #
+
+  @handle CreateTodoList, (command) ->
     @record new TodoListCreated {
       sourceId: @getId()
       title: command.title
       maxItems: command.maxItems
     }
-
-  @handle TodoListCreated, (event) ->
-    @_title = event.title
-    @_maxItems = event.maxItems
-    @_items = []
 
   @handle AddTodo, (command) ->
     if @_items.length + 1 > @_maxItems
@@ -79,8 +71,37 @@ class TodoList extends Space.eventSourcing.Aggregate
       title: command.title
     }
 
+  # ======= EVENTS ======== #
+
+  @handle TodoListCreated, (event) ->
+    @_title = event.title
+    @_maxItems = event.maxItems
+    @_items = []
+
   @handle TodoAdded, (event) ->
     @_items.push { id: event.todoId, title: event.title }
+
+class TodoListRouter extends Space.eventSourcing.Router
+  Aggregate: TodoList
+  InitializingCommand: CreateTodoList
+  RouteCommands: [AddTodo]
+
+class TodoListApplication extends Space.Application
+
+  RequiredModules: ['Space.eventSourcing']
+
+  Configuration: {
+    appId: 'TodoListApplication'
+    eventSourcing: {
+      commitsCollection: new Mongo.Collection('test_commits_collection')
+    }
+  }
+
+  configure: -> @injector.map(TodoListRouter).asSingleton()
+
+  startup: ->
+    @reset()
+    @injector.create(TodoListRouter)
 
 describe 'Space.testing - aggregates', ->
 
@@ -88,31 +109,54 @@ describe 'Space.testing - aggregates', ->
     @id = '123'
     @title = 'testList'
     @maxItems = 1
+    @app = new TodoListApplication()
+    @app.start()
 
   it 'can be used to test resulting events', ->
+
     todoId = '2'
     todoTitle = 'test'
-    TestAggregate(TodoList)
-    .Given(
+
+    @app.given(
       new CreateTodoList targetId: @id, title: @title, maxItems: @maxItems
     )
-    .When([
+    .when([
       new AddTodo targetId: @id, id: todoId, title: todoTitle
     ])
-    .Expect([
-      new TodoListCreated(sourceId: @id, title: @title, maxItems: @maxItems)
-      new TodoAdded(sourceId: @id, todoId: todoId, title: todoTitle)
+    .expect([
+      new TodoListCreated(
+        sourceId: @id
+        version: 1
+        title: @title
+        maxItems: @maxItems
+      )
+      new TodoAdded(
+        sourceId: @id
+        version: 2
+        todoId: todoId
+        title: todoTitle
+      )
     ])
 
   it 'supports testing errors', ->
-    TestAggregate(TodoList)
-    .Given([
-      new TodoListCreated(sourceId: @id, title: @title, maxItems: @maxItems)
-      new TodoAdded(sourceId: @id, todoId: '1', title: 'first')
+
+    @app.given([
+      new TodoListCreated(
+        sourceId: @id
+        version: 1
+        title: @title
+        maxItems: @maxItems
+      ),
+      new TodoAdded(
+        sourceId: @id
+        version: 2
+        todoId: '1'
+        title: 'first'
+      )
     ])
-    .When([
+    .when([
       new AddTodo(targetId: @id, id: '2', title: 'second')
     ])
-    .ExpectToFailWith(
+    .expectToFailWith(
       new TooManyItems(@maxItems, @title)
     )

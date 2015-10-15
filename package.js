@@ -1,7 +1,7 @@
 Package.describe({
   summary: 'Helpers for Testing Space Applications and Modules.',
   name: 'space:testing',
-  version: '1.4.4',
+  version: '1.5.0',
   git: 'https://github.com/meteor-space/testing.git',
   debugOnly: true
 });
@@ -33,7 +33,8 @@ Package.onTest(function(api) {
     'coffeescript',
     'check',
     'underscore',
-    'space:base',
+    'mongo',
+    'space:base@2.5.1',
     'space:event-sourcing@1.2.2',
     'space:testing',
     'practicalmeteor:munit@2.1.4',
