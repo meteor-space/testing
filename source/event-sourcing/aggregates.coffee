@@ -1,8 +1,9 @@
-
-Space.Application::given = ->
-  test = new MessagesIntegrationTest this
-  test.given.apply test, arguments
-  return test
+if Space?
+  # Add BDD api as method on application instances
+  Space.Application::given = ->
+    test = new MessagesIntegrationTest this
+    test.given.apply test, arguments
+    return test
 
 class MessagesIntegrationTest
 
