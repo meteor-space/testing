@@ -13,6 +13,8 @@ Package.onUse(function(api) {
   api.use([
     'coffeescript',
     'underscore',
+    'reactive-var',
+    'reactive-dict',
     'practicalmeteor:munit@2.1.4',
   ]);
 
@@ -23,6 +25,7 @@ Package.onUse(function(api) {
     'source/modules/to_create.coffee',
     'source/sinon/to_match.coffee',
     'source/event-sourcing/aggregates.coffee',
+    'source/flux/stores-bdd-api.coffee',
   ]);
 
 });
@@ -32,8 +35,8 @@ Package.onTest(function(api) {
   api.use([
     'coffeescript',
     'check',
-    'underscore',
     'mongo',
+    'underscore',
     'space:base@2.5.1',
     'space:event-sourcing@1.4.0',
     'space:testing',
