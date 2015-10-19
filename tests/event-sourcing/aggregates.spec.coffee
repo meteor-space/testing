@@ -52,34 +52,31 @@ class TodoList extends Space.eventSourcing.Aggregate
   _items: null
   _maxItems: 0
 
-  # ======= COMMANDS ======== #
+  handlers: -> {
 
-  @handle CreateTodoList, (command) ->
-    @record new TodoListCreated {
-      sourceId: @getId()
-      title: command.title
-      maxItems: command.maxItems
-    }
+    CreateTodoList: (command) ->
+      @record new TodoListCreated {
+        sourceId: @getId()
+        title: command.title
+        maxItems: command.maxItems
+      }
 
-  @handle AddTodo, (command) ->
-    if @_items.length + 1 > @_maxItems
-      throw new TooManyItems @_maxItems, @_title
+    AddTodo: (command) ->
+      if @_items.length + 1 > @_maxItems
+        throw new TooManyItems @_maxItems, @_title
+      @record new TodoAdded {
+        sourceId: @getId()
+        todoId: command.id
+        title: command.title
+      }
 
-    @record new TodoAdded {
-      sourceId: @getId()
-      todoId: command.id
-      title: command.title
-    }
+    TodoListCreated: (event) ->
+      @_title = event.title
+      @_maxItems = event.maxItems
+      @_items = []
 
-  # ======= EVENTS ======== #
-
-  @handle TodoListCreated, (event) ->
-    @_title = event.title
-    @_maxItems = event.maxItems
-    @_items = []
-
-  @handle TodoAdded, (event) ->
-    @_items.push { id: event.todoId, title: event.title }
+    TodoAdded: (event) -> @_items.push { id: event.todoId, title: event.title }
+  }
 
 class TodoListRouter extends Space.eventSourcing.Router
   Aggregate: TodoList
@@ -97,9 +94,9 @@ class TodoListApplication extends Space.Application
     }
   }
 
-  configure: -> @injector.map(TodoListRouter).asSingleton()
+  beforeStart: -> @injector.map(TodoListRouter).asSingleton()
 
-  startup: ->
+  afterStart: ->
     @reset()
     @injector.create(TodoListRouter)
 
