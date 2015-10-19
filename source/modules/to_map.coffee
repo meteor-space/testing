@@ -46,7 +46,7 @@ chai.use (chai, utils) ->
 
     mapping = toClass: sinon.spy()
     module.injector.map.withArgs(@_expectedMappingName).returns mapping
-    module.configure()
+    module.start()
 
     @assert(
       mapping.toClass.calledWith(expectedClass),
@@ -61,7 +61,7 @@ chai.use (chai, utils) ->
 
     mapping = asSingleton: sinon.spy()
     module.injector.map.withArgs(@_expectedMappingName).returns mapping
-    module.configure()
+    module.start()
 
     @assert(
       mapping.asSingleton.callCount is 1,
@@ -76,7 +76,7 @@ chai.use (chai, utils) ->
 
     mapping = toSingleton: sinon.spy()
     module.injector.map.withArgs(@_expectedMappingName).returns mapping
-    module.configure()
+    module.start()
 
     @assert(
       mapping.toSingleton.calledWith(expectedClass),
@@ -91,7 +91,7 @@ chai.use (chai, utils) ->
 
     mapping = toStaticValue: sinon.spy()
     module.injector.map.withArgs(@_expectedMappingName).returns mapping
-    module.configure()
+    module.start()
 
     @assert(
       mapping.toStaticValue.calledWith(expectedValue),
@@ -106,7 +106,7 @@ chai.use (chai, utils) ->
 
     mapping = asStaticValue: sinon.spy()
     module.injector.map.withArgs(@_expectedMappingName).returns mapping
-    module.configure()
+    module.start()
 
     @assert(
       mapping.asStaticValue.callCount is 1,
@@ -121,7 +121,7 @@ chai.use (chai, utils) ->
 
     mapping = toValue: sinon.spy()
     module.injector.map.withArgs(@_expectedMappingName).returns mapping
-    module.configure()
+    module.start()
 
     @assert(
       mapping.toValue.calledWith(expectedValue),
@@ -136,7 +136,7 @@ chai.use (chai, utils) ->
 
     mapping = toReturnValueOf: sinon.spy()
     module.injector.map.withArgs(@_expectedMappingName).returns mapping
-    module.configure()
+    module.start()
 
     @assert(
       mapping.toReturnValueOf.calledWith(expectedFunction),
@@ -144,4 +144,3 @@ chai.use (chai, utils) ->
       "",
       expectedFunction
     )
-

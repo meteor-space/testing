@@ -15,7 +15,7 @@ Package.onUse(function(api) {
     'underscore',
     'reactive-var',
     'reactive-dict',
-    'practicalmeteor:munit@2.1.4',
+    'practicalmeteor:munit@2.1.5',
   ]);
 
   api.addFiles([
@@ -37,10 +37,10 @@ Package.onTest(function(api) {
     'check',
     'mongo',
     'underscore',
-    'space:base@2.5.1',
+    'space:base@3.1.0',
     'space:event-sourcing@1.4.0',
     'space:testing',
-    'practicalmeteor:munit@2.1.4',
+    'practicalmeteor:munit@2.1.5',
   ]);
 
   api.addFiles([

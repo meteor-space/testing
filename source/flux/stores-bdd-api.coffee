@@ -6,8 +6,8 @@ if Space?.flux?
     # so we dont have to provide all dependencies manually
     app = Space.Application.create {
       RequiredModules: ['Space.flux']
-      configure: -> @injector.map('Store').toSingleton(storeClass)
-      startup: -> @injector.create 'Store'
+      onInitialize: -> @injector.map('Store').toSingleton(storeClass)
+      onStart: -> @injector.create 'Store'
     }
     app.start()
     test = new StoreIntegrationTest app.injector.get('Store')
