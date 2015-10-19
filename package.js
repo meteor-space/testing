@@ -21,8 +21,6 @@ Package.onUse(function(api) {
   api.addFiles([
     'source/classes/depend_on.coffee',
     'source/classes/extend.coffee',
-    'source/modules/to_map.coffee',
-    'source/modules/to_create.coffee',
     'source/sinon/to_match.coffee',
     'source/event-sourcing/aggregates.coffee',
     'source/flux/stores-bdd-api.coffee',
@@ -46,8 +44,6 @@ Package.onTest(function(api) {
   api.addFiles([
     'tests/classes/depend_on.integration.coffee',
     'tests/classes/extend.spec.coffee',
-    'tests/modules/to_map.integration.coffee',
-    'tests/modules/to_create.integration.coffee',
     'tests/sinon/to_match.integration.coffee',
     'tests/event-sourcing/aggregates.spec.coffee',
   ]);
