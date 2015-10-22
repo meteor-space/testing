@@ -1,7 +1,7 @@
 Package.describe({
   summary: 'Helpers for Testing Space Applications and Modules.',
   name: 'space:testing',
-  version: '2.0.0',
+  version: '2.0.1',
   git: 'https://github.com/meteor-space/testing.git',
   debugOnly: true
 });
@@ -17,6 +17,11 @@ Package.onUse(function(api) {
     'reactive-dict',
     'practicalmeteor:munit@2.1.5',
   ]);
+
+  api.use([
+    'space:event-sourcing@2.1.0',
+    'space:flux@0.6.0',
+  ], {weak: true});
 
   api.addFiles([
     'source/classes/depend_on.coffee',
@@ -37,6 +42,7 @@ Package.onTest(function(api) {
     'underscore',
     'space:base@3.1.0',
     'space:event-sourcing@2.0.0',
+    'space:flux@0.6.0',
     'space:testing',
     'practicalmeteor:munit@2.1.5',
   ]);
