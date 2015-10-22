@@ -18,6 +18,11 @@ Package.onUse(function(api) {
     'practicalmeteor:munit@2.1.5',
   ]);
 
+  api.use([
+    'space:event-sourcing',
+    'space:flux',
+  ], {weak: true});
+
   api.addFiles([
     'source/classes/depend_on.coffee',
     'source/classes/extend.coffee',
@@ -37,6 +42,7 @@ Package.onTest(function(api) {
     'underscore',
     'space:base@3.1.0',
     'space:event-sourcing@2.0.0',
+    'space:flux@0.6.0',
     'space:testing',
     'practicalmeteor:munit@2.1.5',
   ]);
