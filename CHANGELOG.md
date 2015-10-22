@@ -1,6 +1,9 @@
 Changelog
 =========
 
+### 2.0.1
+- Declare `space:event-sourcing` and `space:flux` as weak dependencies.
+
 ### 2.0.0
 - Updates to all latest space packages
 - Removes depricated module testing api (not needed -> use BDD apis and
