@@ -52,7 +52,7 @@ class TodoList extends Space.eventSourcing.Aggregate
   _items: null
   _maxItems: 0
 
-  handlers: -> {
+  commandMap: -> {
 
     CreateTodoList: (command) ->
       @record new TodoListCreated {
@@ -70,6 +70,10 @@ class TodoList extends Space.eventSourcing.Aggregate
         title: command.title
       }
 
+  }
+
+  eventMap: -> {
+    
     TodoListCreated: (event) ->
       @_title = event.title
       @_maxItems = event.maxItems
