@@ -19,8 +19,8 @@ Package.onUse(function(api) {
   ]);
 
   api.use([
-    'space:event-sourcing',
-    'space:flux',
+    'space:event-sourcing@2.1.0',
+    'space:flux@0.6.0',
   ], {weak: true});
 
   api.addFiles([
