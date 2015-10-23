@@ -27,6 +27,7 @@ Package.onUse(function(api) {
     'source/classes/depend_on.coffee',
     'source/classes/extend.coffee',
     'source/sinon/to_match.coffee',
+    'source/bdd-api.coffee',
     'source/event-sourcing/aggregates.coffee',
     'source/flux/stores-bdd-api.coffee',
   ]);
