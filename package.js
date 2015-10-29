@@ -24,9 +24,9 @@ Package.onUse(function(api) {
     'source/classes/depend_on.coffee',
     'source/classes/extend.coffee',
     'source/sinon/to_match.coffee',
-    'source/bdd-api.coffee',
-    'source/event-sourcing/aggregates.coffee',
-    'source/flux/stores-bdd-api.coffee',
+    'source/bdd/module-api.coffee',
+    'source/bdd/aggregates-bdd-api.coffee',
+    'source/bdd/stores-bdd-api.coffee',
   ]);
 
 });
