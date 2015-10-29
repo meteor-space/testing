@@ -1,5 +1,6 @@
 # Add BDD api for testing Space.flux.Store
 Space.Module.registerBddApi (app, systemUnderTest) ->
+  if !Space.flux? then return
   if isSubclassOf(systemUnderTest, Space.flux.Store)
     return new Space.Module.StoreTest(app, systemUnderTest)
 

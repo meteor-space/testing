@@ -24,7 +24,7 @@ Package.onUse(function(api) {
     'source/classes/depend_on.coffee',
     'source/classes/extend.coffee',
     'source/sinon/to_match.coffee',
-    'source/bdd/module-api.coffee',
+    'source/bdd/test-api.coffee',
     'source/bdd/aggregates-bdd-api.coffee',
     'source/bdd/stores-bdd-api.coffee',
   ]);
@@ -38,8 +38,8 @@ Package.onTest(function(api) {
     'check',
     'mongo',
     'underscore',
-    'space:testing',
     'space:event-sourcing@2.0.0',
+    'space:testing',
     'practicalmeteor:munit@2.1.5',
   ]);
 
@@ -47,7 +47,10 @@ Package.onTest(function(api) {
     'tests/classes/depend_on.integration.coffee',
     'tests/classes/extend.spec.coffee',
     'tests/sinon/to_match.integration.coffee',
-    'tests/event-sourcing/aggregates.spec.coffee',
   ]);
+
+  api.addFiles([
+    'tests/bdd/aggregates-bdd-api.tests.coffee',
+  ], 'server');
 
 });
