@@ -1,10 +1,10 @@
-if Space?.flux?
+if Space?
 
   # Add BDD api for testing Space.flux.Store
 
-  Space.Module.registerTestHandler (systemUnderTest) ->
+  Space.Module.registerBddApi (app, systemUnderTest) ->
     if isSubclassOf(systemUnderTest, Space.flux.Store)
-      return new Space.Module.StoreTest(this, systemUnderTest)
+      return new Space.Module.StoreTest(app, systemUnderTest)
 
   class Space.Module.StoreTest
 
@@ -13,7 +13,9 @@ if Space?.flux?
     _app: null
 
     constructor: (@_app, storeClass) ->
+      @_app.start()
       @_storeMappingId = @_app.injector.getIdForValue(storeClass)
+      @_store = @_app.injector.get(@_storeMappingId)
 
     given: (state={}) ->
       for key, value of state

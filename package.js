@@ -15,15 +15,12 @@ Package.onUse(function(api) {
     'underscore',
     'reactive-var',
     'reactive-dict',
+    'space:base@3.1.0',
     'practicalmeteor:munit@2.1.5',
   ]);
 
-  api.use([
-    'space:event-sourcing@2.1.0',
-    'space:flux@0.6.0',
-  ], {weak: true});
-
   api.addFiles([
+    'source/helpers/is-subclass.coffee',
     'source/classes/depend_on.coffee',
     'source/classes/extend.coffee',
     'source/sinon/to_match.coffee',
@@ -41,10 +38,9 @@ Package.onTest(function(api) {
     'check',
     'mongo',
     'underscore',
-    'space:base@3.1.0',
+    'space:testing',
     'space:event-sourcing@2.0.0',
     'space:flux@0.6.0',
-    'space:testing',
     'practicalmeteor:munit@2.1.5',
   ]);
 
