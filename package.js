@@ -40,7 +40,6 @@ Package.onTest(function(api) {
     'underscore',
     'space:testing',
     'space:event-sourcing@2.0.0',
-    'space:flux@0.6.0',
     'practicalmeteor:munit@2.1.5',
   ]);
 
