@@ -15,7 +15,7 @@ Package.onUse(function(api) {
     'underscore',
     'reactive-var',
     'reactive-dict',
-    'space:base@3.1.0',
+    'space:base@3.1.1',
     'practicalmeteor:munit@2.1.5',
   ]);
 
@@ -38,7 +38,7 @@ Package.onTest(function(api) {
     'check',
     'mongo',
     'underscore',
-    'space:event-sourcing@2.0.0',
+    'space:event-sourcing@2.1.0',
     'space:testing',
     'practicalmeteor:munit@2.1.5',
   ]);
