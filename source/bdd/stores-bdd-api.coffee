@@ -1,35 +1,32 @@
-if Space?
+# Add BDD api for testing Space.flux.Store
+Space.Module.registerBddApi (app, systemUnderTest) ->
+  if isSubclassOf(systemUnderTest, Space.flux.Store)
+    return new Space.Module.StoreTest(app, systemUnderTest)
 
-  # Add BDD api for testing Space.flux.Store
+class Space.Module.StoreTest
 
-  Space.Module.registerBddApi (app, systemUnderTest) ->
-    if isSubclassOf(systemUnderTest, Space.flux.Store)
-      return new Space.Module.StoreTest(app, systemUnderTest)
+  _storeMappingId: null
+  _store: null
+  _app: null
 
-  class Space.Module.StoreTest
+  constructor: (@_app, storeClass) ->
+    @_app.start()
+    @_storeMappingId = @_app.injector.getIdForValue(storeClass)
+    @_store = @_app.injector.get(@_storeMappingId)
 
-    _storeMappingId: null
-    _store: null
-    _app: null
+  given: (state={}) ->
+    for key, value of state
+      if @_store._reactiveVars[key]?
+        @_store._setReactiveVar key, value
+      else
+        @_store._setSessionVar key, value
+    return this
 
-    constructor: (@_app, storeClass) ->
-      @_app.start()
-      @_storeMappingId = @_app.injector.getIdForValue(storeClass)
-      @_store = @_app.injector.get(@_storeMappingId)
+  when: (events) ->
+    @_store.on(event) for event in events
+    return this
 
-    given: (state={}) ->
-      for key, value of state
-        if @_store._reactiveVars[key]?
-          @_store._setReactiveVar key, value
-        else
-          @_store._setSessionVar key, value
-      return this
-
-    when: (events) ->
-      @_store.on(event) for event in events
-      return this
-
-    expect: (state) ->
-      storeState = {}
-      storeState[key] = @_store[key]() for key of state
-      expect(state).toMatch storeState
+  expect: (state) ->
+    storeState = {}
+    storeState[key] = @_store[key]() for key of state
+    expect(state).toMatch storeState
