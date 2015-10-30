@@ -1,11 +1,10 @@
-if Space?
-  # Add BDD api as method on application instances
-  Space.Application::given = ->
-    test = new MessagesIntegrationTest this
-    test.given.apply test, arguments
-    return test
+# Add BDD api for testing Space.eventSourcing.Aggregate
+Space.Module.registerBddApi (app, systemUnderTest) ->
+  if !Space.eventSourcing? then return
+  if isSubclassOf(systemUnderTest, Space.eventSourcing.Aggregate)
+    return new Space.Module.AggregateTest(app)
 
-class MessagesIntegrationTest
+class Space.Module.AggregateTest
 
   _app: null
   _aggregateClass: null
@@ -18,6 +17,7 @@ class MessagesIntegrationTest
   _expectedEvents: null
 
   constructor: (@_app) ->
+    @_app.start()
     @fakeDates = sinon.useFakeTimers('Date')
     @_messages = []
     @_publishedEvents = []
@@ -26,19 +26,16 @@ class MessagesIntegrationTest
     @_eventBus = @_app.injector.get 'Space.messaging.EventBus'
 
   given: (data) ->
-
     if _.isArray(data)
       # We have to add a commit with the historic events
       changes = events: data, commands: []
       aggregateId = data[0].sourceId
       version = data[0].version ? 1
       @_commitStore.add changes, aggregateId, version - 1
-
     else if data instanceof Space.messaging.Command
       # We just send the command through the app and let
       # it handle the creation and saving of the aggregate
       @_messages.push data
-
     return this
 
   when: (messages) ->

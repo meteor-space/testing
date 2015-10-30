@@ -73,7 +73,7 @@ class TodoList extends Space.eventSourcing.Aggregate
   }
 
   eventMap: -> {
-    
+
     TodoListCreated: (event) ->
       @_title = event.title
       @_maxItems = event.maxItems
@@ -110,15 +110,14 @@ describe 'Space.testing - aggregates', ->
     @id = '123'
     @title = 'testList'
     @maxItems = 1
-    @app = new TodoListApplication()
-    @app.start()
 
   it 'can be used to test resulting events', ->
 
     todoId = '2'
     todoTitle = 'test'
 
-    @app.given(
+    TodoListApplication.test(TodoList)
+    .given(
       new CreateTodoList targetId: @id, title: @title, maxItems: @maxItems
     )
     .when([
@@ -141,7 +140,8 @@ describe 'Space.testing - aggregates', ->
 
   it 'supports testing errors', ->
 
-    @app.given([
+    TodoListApplication.test(TodoList)
+    .given([
       new TodoListCreated(
         sourceId: @id
         version: 1
