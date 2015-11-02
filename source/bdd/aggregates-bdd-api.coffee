@@ -6,16 +6,6 @@ Space.Module.registerBddApi (app, systemUnderTest) ->
 
 class Space.Module.AggregateTest
 
-  _app: null
-  _aggregateClass: null
-  _aggregate: null
-  _messages: null
-  _commitStore: null
-  _eventBus: null
-  _publishedEvents: null
-  _expectation: null
-  _expectedEvents: null
-
   constructor: (@_app) ->
     @_app.start()
     @fakeDates = sinon.useFakeTimers('Date')
@@ -62,7 +52,10 @@ class Space.Module.AggregateTest
     @_cleanup()
 
   _addPublishedEvents: (event) =>
-    @_publishedEvents.push(event) if not @_isSendingTestMessages
+    unless @_ignoreNextEvent
+      @_publishedEvents.push(event)
+    else
+      @_ignoreNextEvent = false
 
   _cleanup: ->
     @fakeDates.restore()
@@ -73,4 +66,5 @@ class Space.Module.AggregateTest
       if message instanceof Space.messaging.Command
         @_app.send(message)
       else
-        @_app.publish(message, ignoreHooks: true)
+        @_ignoreNextEvent = true
+        @_app.publish message
