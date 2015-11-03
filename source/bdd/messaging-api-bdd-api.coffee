@@ -14,7 +14,11 @@ class ApiTest
     @_expectedCommands = []
     @_commandBus = @_app.injector.get 'Space.messaging.CommandBus'
 
-  send: (@_apiArgs...) -> return this
+  send: (command) ->
+    @_apiArgs = [command]
+    return this
+
+  call: (@_apiArgs...) -> return this
 
   expect: (expectedCommands) ->
     if _.isFunction(expectedCommands)
