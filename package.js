@@ -27,6 +27,7 @@ Package.onUse(function(api) {
     'source/bdd/test-api.coffee',
     'source/bdd/aggregates-bdd-api.coffee',
     'source/bdd/stores-bdd-api.coffee',
+    'source/bdd/messaging-api-bdd-api.coffee',
   ]);
 
 });
