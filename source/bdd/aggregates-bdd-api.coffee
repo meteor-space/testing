@@ -2,9 +2,9 @@
 Space.Module.registerBddApi (app, systemUnderTest) ->
   if !Space.eventSourcing? then return
   if isSubclassOf(systemUnderTest, Space.eventSourcing.Aggregate)
-    return new Space.Module.AggregateTest(app)
+    return new AggregateTest(app)
 
-class Space.Module.AggregateTest
+class AggregateTest
 
   constructor: (@_app) ->
     @_app.reset()

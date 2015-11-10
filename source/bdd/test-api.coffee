@@ -3,8 +3,8 @@ registeredBddApis = []
 Space.Module.registerBddApi = (api) -> registeredBddApis.push api
 
 Space.Module.test = Space.Application.test = (systemUnderTest, app=null) ->
-  throw new Error 'Cannot test <undefined>' unless systemUnderTest? 
-  test = null
+  throw new Error 'Cannot test <undefined>' unless systemUnderTest?
+  testApi = null
   isModule = isSubclassOf(this, Space.Module)
   isApplication = isSubclassOf(this, Space.Application)
 
@@ -17,7 +17,7 @@ Space.Module.test = Space.Application.test = (systemUnderTest, app=null) ->
 
   for api in registeredBddApis
     returnValue = api(app, systemUnderTest)
-    test = returnValue if returnValue?
+    testApi = returnValue if returnValue?
 
-  if not test? then throw new Error "No testing API found for #{systemUnderTest}"
-  return test
+  if not testApi? then throw new Error "No testing API found for #{systemUnderTest}"
+  return testApi

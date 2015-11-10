@@ -93,16 +93,11 @@ class TodoListApplication extends Space.Application
 
   Configuration: {
     appId: 'TodoListApplication'
-    eventSourcing: {
-      commitsCollection: new Mongo.Collection('test_commits_collection')
-    }
   }
 
-  beforeStart: -> @injector.map(TodoListRouter).asSingleton()
+  onInitialize: -> @injector.map(TodoListRouter).asSingleton()
 
-  afterStart: ->
-    @reset()
-    @injector.create(TodoListRouter)
+  onStart: -> @injector.create(TodoListRouter)
 
 describe 'Space.testing - aggregates', ->
 
