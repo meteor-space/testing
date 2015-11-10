@@ -11,6 +11,7 @@ class Space.Module.StoreTest
   _app: null
 
   constructor: (@_app, storeClass) ->
+    @_app.reset()
     @_app.start()
     @_storeMappingId = @_app.injector.getIdForValue(storeClass)
     @_store = @_app.injector.get(@_storeMappingId)
@@ -24,8 +25,11 @@ class Space.Module.StoreTest
     return this
 
   when: (events) ->
-    @_store.on(event) for event in events
-    return this
+    try
+      @_store.on(event) for event in events
+    finally
+      @_app.stop()
+      return this
 
   expect: (state) ->
     storeState = {}
