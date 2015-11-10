@@ -7,6 +7,7 @@ Space.Module.registerBddApi (app, systemUnderTest) ->
 class Space.Module.AggregateTest
 
   constructor: (@_app) ->
+    @_app.reset()
     @_app.start()
     @fakeDates = sinon.useFakeTimers('Date')
     @_messages = []
@@ -47,9 +48,11 @@ class Space.Module.AggregateTest
     @_run()
 
   _run: ->
-    @_eventBus.onPublish @_addPublishedEvents
-    @_test()
-    @_cleanup()
+    try
+      @_eventBus.onPublish @_addPublishedEvents
+      @_test()
+    finally
+      @_cleanup()
 
   _addPublishedEvents: (event) =>
     unless @_ignoreNextEvent
@@ -59,7 +62,7 @@ class Space.Module.AggregateTest
 
   _cleanup: ->
     @fakeDates.restore()
-    @_app.reset()
+    @_app.stop()
 
   _sendMessagesThroughApp: =>
     for message in @_messages
