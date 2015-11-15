@@ -7,6 +7,7 @@ Space.Module.registerBddApi (app, systemUnderTest) ->
 class ApiTest
 
   constructor: (@_app) ->
+    @_app.reset()
     @_app.start()
     @fakeDates = sinon.useFakeTimers('Date')
     @_apiArgs = []
@@ -35,13 +36,15 @@ class ApiTest
     @_run()
 
   _run: ->
-    @_commandBus.onSend (command) => @_sentCommands.push(command)
-    @_test()
-    @_cleanup()
+    try
+      @_commandBus.onSend (command) => @_sentCommands.push(command)
+      @_test()
+    finally
+      @_cleanup()
 
   _cleanup: ->
     @fakeDates.restore()
-    @_app.reset()
+    @_app.stop()
 
   _callApi: =>
     if @_apiArgs.length is 1
