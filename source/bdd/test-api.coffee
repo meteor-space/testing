@@ -3,7 +3,7 @@ registeredBddApis = []
 Space.Module.registerBddApi = (api) -> registeredBddApis.push api
 
 Space.Module.test = Space.Application.test = (systemUnderTest, app=null) ->
-  throw new Error 'Cannot test <undefined>' unless systemUnderTest? 
+  throw new Error 'Cannot test <undefined>' unless systemUnderTest?
   test = null
   isModule = isSubclassOf(this, Space.Module)
   isApplication = isSubclassOf(this, Space.Application)
@@ -13,7 +13,7 @@ Space.Module.test = Space.Application.test = (systemUnderTest, app=null) ->
     if isApplication
       app = new this()
     else
-      app = Space.Application.create RequiredModules: [this.publishedAs]
+      app = Space.Application.create requiredModules: [this.publishedAs]
 
   for api in registeredBddApis
     returnValue = api(app, systemUnderTest)
