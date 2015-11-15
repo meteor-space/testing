@@ -13,7 +13,7 @@ Space.Module.test = Space.Application.test = (systemUnderTest, app=null) ->
     if isApplication
       app = new this()
     else
-      app = Space.Application.create RequiredModules: [this.publishedAs]
+      app = Space.Application.create requiredModules: [this.publishedAs]
 
   for api in registeredBddApis
     returnValue = api(app, systemUnderTest)

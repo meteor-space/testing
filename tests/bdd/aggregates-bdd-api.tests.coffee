@@ -13,7 +13,7 @@ class CreateTodoList extends Command
 class AddTodo extends Command
   @type 'AddTodo'
   @fields: {
-    id: String
+    todoId: String
     title: String
   }
 
@@ -48,50 +48,44 @@ class TooManyItems extends Error
 
 class TodoList extends Space.eventSourcing.Aggregate
 
-  _title: null
-  _items: null
-  _maxItems: 0
+  fields: {
+    title: String
+    items: [Object]
+    maxItems: Match.Integer
+  }
 
   commandMap: -> {
 
     CreateTodoList: (command) ->
-      @record new TodoListCreated {
-        sourceId: @getId()
-        title: command.title
-        maxItems: command.maxItems
-      }
+      @record new TodoListCreated @_eventPropsFromCommand(command)
 
     AddTodo: (command) ->
-      if @_items.length + 1 > @_maxItems
-        throw new TooManyItems @_maxItems, @_title
-      @record new TodoAdded {
-        sourceId: @getId()
-        todoId: command.id
-        title: command.title
-      }
+      throw new TooManyItems(@maxItems, @title) if @items.length + 1 > @maxItems
+      @record new TodoAdded @_eventPropsFromCommand(command)
 
   }
 
   eventMap: -> {
 
     TodoListCreated: (event) ->
-      @_title = event.title
-      @_maxItems = event.maxItems
-      @_items = []
+      @_assignFields(event)
+      @items = []
 
-    TodoAdded: (event) -> @_items.push { id: event.todoId, title: event.title }
+    TodoAdded: (event) -> @items.push { id: event.todoId, title: event.title }
   }
 
+TodoList.registerSnapshotType 'TodoList'
+
 class TodoListRouter extends Space.eventSourcing.Router
-  Aggregate: TodoList
-  InitializingCommand: CreateTodoList
-  RouteCommands: [AddTodo]
+  aggregate: TodoList
+  initializingCommand: CreateTodoList
+  routeCommands: [AddTodo]
 
 class TodoListApplication extends Space.Application
 
-  RequiredModules: ['Space.eventSourcing']
+  requiredModules: ['Space.eventSourcing']
 
-  Configuration: {
+  configuration: {
     appId: 'TodoListApplication'
   }
 
@@ -116,7 +110,7 @@ describe 'Space.testing - aggregates', ->
       new CreateTodoList targetId: @id, title: @title, maxItems: @maxItems
     )
     .when([
-      new AddTodo targetId: @id, id: todoId, title: todoTitle
+      new AddTodo targetId: @id, todoId: todoId, title: todoTitle
     ])
     .expect([
       new TodoListCreated(
@@ -151,7 +145,7 @@ describe 'Space.testing - aggregates', ->
       )
     ])
     .when([
-      new AddTodo(targetId: @id, id: '2', title: 'second')
+      new AddTodo(targetId: @id, todoId: '2', title: 'second')
     ])
     .expectToFailWith(
       new TooManyItems(@maxItems, @title)
