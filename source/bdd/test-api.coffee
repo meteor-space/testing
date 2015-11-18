@@ -13,7 +13,10 @@ Space.Module.test = Space.Application.test = (systemUnderTest, app=null) ->
     if isApplication
       app = this
     else
-      app = Space.Application.define('TestApp', { requiredModules: [this.publishedAs]})
+      app = Space.Application.define('TestApp', {
+        configuration: { appId: 'testApp' },
+        requiredModules: [this.publishedAs]
+      })
     appInstance = new app()
 
   for api in registeredBddApis
