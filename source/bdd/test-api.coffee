@@ -8,15 +8,16 @@ Space.Module.test = Space.Application.test = (systemUnderTest, app=null) ->
   isModule = isSubclassOf(this, Space.Module)
   isApplication = isSubclassOf(this, Space.Application)
 
-  # Wrap modules into stub app to make dependency injection work
+  # BDD API relies on dependency injection provided by Application
   if !app?
     if isApplication
-      app = new this()
+      app = this
     else
-      app = Space.Application.create requiredModules: [this.publishedAs]
+      app = Space.Application.define('TestApp', { requiredModules: [this.publishedAs]})
+    appInstance = new app()
 
   for api in registeredBddApis
-    returnValue = api(app, systemUnderTest)
+    returnValue = api(appInstance, systemUnderTest)
     testApi = returnValue if returnValue?
 
   if not testApi? then throw new Error "No testing API found for #{systemUnderTest}"
