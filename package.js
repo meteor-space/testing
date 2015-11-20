@@ -15,8 +15,9 @@ Package.onUse(function(api) {
     'underscore',
     'reactive-var',
     'reactive-dict',
+    'tracker',
     'space:base@3.1.1',
-    'practicalmeteor:munit@2.1.5',
+    'practicalmeteor:munit@2.1.5'
   ]);
 
   api.addFiles([
@@ -27,7 +28,7 @@ Package.onUse(function(api) {
     'source/bdd/test-api.coffee',
     'source/bdd/aggregates-bdd-api.coffee',
     'source/bdd/stores-bdd-api.coffee',
-    'source/bdd/messaging-api-bdd-api.coffee',
+    'source/bdd/messaging-api-bdd-api.coffee'
   ]);
 
 });
@@ -41,17 +42,17 @@ Package.onTest(function(api) {
     'underscore',
     'space:event-sourcing@2.1.0',
     'space:testing',
-    'practicalmeteor:munit@2.1.5',
+    'practicalmeteor:munit@2.1.5'
   ]);
 
   api.addFiles([
     'tests/classes/depend_on.integration.coffee',
     'tests/classes/extend.spec.coffee',
-    'tests/sinon/to_match.integration.coffee',
+    'tests/sinon/to_match.integration.coffee'
   ]);
 
   api.addFiles([
-    'tests/bdd/aggregates-bdd-api.tests.coffee',
+    'tests/bdd/aggregates-bdd-api.tests.coffee'
   ], 'server');
 
 });

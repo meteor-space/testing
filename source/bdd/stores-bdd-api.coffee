@@ -9,29 +9,30 @@ class Space.Module.StoreTest
   _storeMappingId: null
   _store: null
   _app: null
+  _givenMessages: null
 
   constructor: (@_app, storeClass) ->
     @_app.reset()
     @_app.start()
     @_storeMappingId = @_app.injector.getIdForValue(storeClass)
     @_store = @_app.injector.get(@_storeMappingId)
+    @_givenMessages = []
 
-  given: (state={}) ->
-    for key, value of state
-      if @_store._reactiveVars[key]?
-        @_store._setReactiveVar key, value
-      else
-        @_store._setSessionVar key, value
-    return this
+  given: (@_givenMessages) -> return this
 
-  when: (events) ->
+  when: (messages) ->
     try
-      @_store.on(event) for event in events
+      for message in @_givenMessages.concat(messages)
+        if message instanceof Space.messaging.Event
+          @_store.on(message)
+        if message instanceof Space.messaging.Command
+          @_app.send(message)
     finally
       @_app.stop()
       return this
 
   expect: (state) ->
+    Tracker.flush()
     storeState = {}
     storeState[key] = @_store[key]() for key of state
     expect(state).toMatch storeState
