@@ -76,7 +76,7 @@ class TodoList extends Space.eventSourcing.Aggregate
 
 TodoList.registerSnapshotType 'TodoList'
 
-class TodoListRouter extends Space.eventSourcing.Router
+class TodoListRouter extends Space.eventSourcing.AggregateRouter
   aggregate: TodoList
   initializingCommand: CreateTodoList
   routeCommands: [AddTodo]
