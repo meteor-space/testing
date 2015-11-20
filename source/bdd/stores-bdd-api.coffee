@@ -18,11 +18,17 @@ class Space.Module.StoreTest
     @_store = @_app.injector.get(@_storeMappingId)
     @_givenMessages = []
 
-  given: (@_givenMessages) -> return this
+  given: (state={}) ->
+    for key, value of state
+      if @_store._reactiveVars[key]?
+        @_store._setReactiveVar key, value
+      else
+        @_store._setSessionVar key, value
+    return this
 
   when: (messages) ->
     try
-      for message in @_givenMessages.concat(messages)
+      for message in messages
         if message instanceof Space.messaging.Event
           @_store.on(message)
         if message instanceof Space.messaging.Command
