@@ -41,12 +41,15 @@ class TodoRemoved extends Event
 
 # ============== EXCEPTIONS =========== #
 
-class TooManyItems extends Error
-  name: 'TooManyItems'
-  constructor: (maxItems, title) ->
-    @message = "Cannot add more than #{maxItems} item to list #{title}"
+TooManyItems = Space.Error.extend('TooManyItems', {
+  Constructor: (maxItems, title) ->
+    Space.Error.call this, "Cannot add more than #{maxItems} item to list #{title}"
+})
+
 
 class TodoList extends Space.eventSourcing.Aggregate
+
+  @type 'TodoList'
 
   fields: {
     title: String
@@ -76,9 +79,9 @@ class TodoList extends Space.eventSourcing.Aggregate
 
 TodoList.registerSnapshotType 'TodoList'
 
-class TodoListRouter extends Space.eventSourcing.AggregateRouter
-  aggregate: TodoList
-  initializingCommand: CreateTodoList
+class TodoListRouter extends Space.eventSourcing.Router
+  eventSourceable: TodoList
+  initializingMessage: CreateTodoList
   routeCommands: [AddTodo]
 
 class TodoListApplication extends Space.Application
@@ -147,6 +150,9 @@ describe 'Space.testing - aggregates', ->
     .when([
       new AddTodo(targetId: @id, todoId: '2', title: 'second')
     ])
-    .expectToFailWith(
-      new TooManyItems(@maxItems, @title)
-    )
+    .expect([
+      new Space.domain.Exception({
+        thrower: 'TodoList'
+        error: new TooManyItems(@maxItems, @title)
+      })
+    ])

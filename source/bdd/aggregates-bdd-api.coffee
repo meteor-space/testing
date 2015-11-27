@@ -15,6 +15,13 @@ class AggregateTest
     @_expectedEvents = []
     @_commitStore = @_app.injector.get 'Space.eventSourcing.CommitStore'
     @_eventBus = @_app.injector.get 'Space.messaging.EventBus'
+    # Don't add stack traces to Space.Error during testing -> hard to stub!
+    @_extractErrorPropsBackup = Space.Error.prototype.extractErrorProperties
+    test = this
+    Space.Error.prototype.extractErrorProperties = ->
+      data = test._extractErrorPropsBackup.apply(this, arguments)
+      delete data.stack
+      return data
 
   given: (data) ->
     if _.isArray(data)
@@ -62,6 +69,8 @@ class AggregateTest
 
   _cleanup: ->
     @fakeDates.restore()
+    # Restore error stack traces after testing
+    Space.Error.prototype.extractErrorProperties = @_extractErrorPropsBackup
     @_app.stop()
 
   _sendMessagesThroughApp: =>
