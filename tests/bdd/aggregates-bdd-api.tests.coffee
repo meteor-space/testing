@@ -119,12 +119,14 @@ describe 'Space.testing - aggregates', ->
       new TodoListCreated(
         sourceId: @id
         version: 1
+        timestamp: Date
         title: @title
         maxItems: @maxItems
       )
       new TodoAdded(
         sourceId: @id
         version: 2
+        timestamp: Date
         todoId: todoId
         title: todoTitle
       )
@@ -154,5 +156,6 @@ describe 'Space.testing - aggregates', ->
       new Space.domain.Exception({
         thrower: 'TodoList'
         error: new TooManyItems(@maxItems, @title)
+        timestamp: Date
       })
     ])
