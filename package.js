@@ -22,9 +22,9 @@ Package.onUse(function(api) {
 
   api.addFiles([
     'source/helpers/is-subclass.coffee',
-    'source/classes/depend_on.coffee',
-    'source/classes/extend.coffee',
-    'source/sinon/to_match.coffee',
+    'source/assertions/depend_on.coffee',
+    'source/assertions/extend.coffee',
+    'source/assertions/to_match.coffee',
     'source/bdd/test-api.coffee',
     'source/bdd/aggregates-bdd-api.coffee',
     'source/bdd/stores-bdd-api.coffee',
@@ -46,9 +46,9 @@ Package.onTest(function(api) {
   ]);
 
   api.addFiles([
-    'tests/classes/depend_on.integration.coffee',
-    'tests/classes/extend.spec.coffee',
-    'tests/sinon/to_match.integration.coffee'
+    'tests/assertions/depend_on.integration.coffee',
+    'tests/assertions/extend.spec.coffee',
+    'tests/assertions/to_match.integration.coffee'
   ]);
 
   api.addFiles([
