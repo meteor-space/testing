@@ -1,7 +1,7 @@
 {
   "space:base": {
     "git":"https://github.com/meteor-space/base.git",
-    "branch": "feature/overridable-struct-checking"
+    "branch": "develop"
   },
   "space:messaging": {
     "git":"https://github.com/meteor-space/messaging.git",
