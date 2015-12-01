@@ -16,15 +16,19 @@ Package.onUse(function(api) {
     'reactive-var',
     'reactive-dict',
     'tracker',
+    'check',
+    'ecmascript',
     'space:base@3.1.1',
     'practicalmeteor:munit@2.1.5'
   ]);
 
   api.addFiles([
+    'source/setup/structs-with-types.js',
     'source/helpers/is-subclass.coffee',
     'source/assertions/depend_on.coffee',
     'source/assertions/extend.coffee',
     'source/assertions/to_match.coffee',
+    'source/assertions/match-array-of-structs.coffee',
     'source/bdd/test-api.coffee',
     'source/bdd/aggregates-bdd-api.coffee',
     'source/bdd/stores-bdd-api.coffee',
