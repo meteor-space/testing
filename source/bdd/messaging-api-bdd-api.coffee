@@ -9,7 +9,6 @@ class ApiTest
   constructor: (@_app) ->
     @_app.reset()
     @_app.start()
-    @fakeDates = sinon.useFakeTimers('Date')
     @_apiArgs = []
     @_sentCommands = []
     @_expectedCommands = []
@@ -28,7 +27,7 @@ class ApiTest
       @_expectedCommands = expectedCommands
     @_test = =>
       @_callApi()
-      expect(@_sentCommands).toMatch @_expectedCommands
+      expect(@_sentCommands).matchArrayOfStructs @_expectedCommands
     @_run()
 
   expectToFailWith: (expectedError) ->
@@ -42,9 +41,7 @@ class ApiTest
     finally
       @_cleanup()
 
-  _cleanup: ->
-    @fakeDates.restore()
-    @_app.stop()
+  _cleanup: -> @_app.stop()
 
   _callApi: =>
     if @_apiArgs.length is 1
