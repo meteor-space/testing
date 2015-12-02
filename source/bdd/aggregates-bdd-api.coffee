@@ -9,7 +9,6 @@ class AggregateTest
   constructor: (@_app) ->
     @_app.reset()
     @_app.start()
-    @fakeDates = sinon.useFakeTimers('Date')
     @_messages = []
     @_publishedEvents = []
     @_expectedEvents = []
@@ -47,7 +46,7 @@ class AggregateTest
       @_expectedEvents = expectedEvents
     @_test = =>
       @_sendMessagesThroughApp()
-      expect(@_publishedEvents).toMatch @_expectedEvents
+      expect(@_publishedEvents).to.matchArrayOfStructs @_expectedEvents
     @_run()
 
   expectToFailWith: (expectedError) ->
@@ -68,7 +67,6 @@ class AggregateTest
       @_ignoreNextEvent = false
 
   _cleanup: ->
-    @fakeDates.restore()
     # Restore error stack traces after testing
     Space.Error.prototype.extractErrorProperties = @_extractErrorPropsBackup
     @_app.stop()
