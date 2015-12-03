@@ -118,15 +118,11 @@ describe 'Space.testing - aggregates', ->
     .expect([
       new TodoListCreated(
         sourceId: @id
-        version: 1
-        timestamp: Date
         title: @title
         maxItems: @maxItems
       )
       new TodoAdded(
         sourceId: @id
-        version: 2
-        timestamp: Date
         todoId: todoId
         title: todoTitle
       )
@@ -138,13 +134,11 @@ describe 'Space.testing - aggregates', ->
     .given([
       new TodoListCreated(
         sourceId: @id
-        version: 1
         title: @title
         maxItems: @maxItems
       ),
       new TodoAdded(
         sourceId: @id
-        version: 2
         todoId: '1'
         title: 'first'
       )
@@ -156,6 +150,5 @@ describe 'Space.testing - aggregates', ->
       new Space.domain.Exception({
         thrower: 'TodoList'
         error: new TooManyItems(@maxItems, @title)
-        timestamp: Date
       })
     ])

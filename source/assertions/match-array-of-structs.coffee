@@ -4,6 +4,8 @@ chai.use (chai, utils) ->
 
     actual = this._obj
 
+    untestedProperties = ['timestamp', 'version', 'meta']
+
     for struct, index in actual
       for key, type of struct.fields()
         if _.isFunction(expected[index][key])
@@ -11,6 +13,9 @@ chai.use (chai, utils) ->
           check struct[key], expected[index][key]
           # Copy over the actual value, so that they are equal
           expected[index][key] = struct[key]
+        else if _.contains(untestedProperties, key)
+          delete expected[index][key]
+          delete struct[key]
 
     # Turn the structs into JSON so that we can output them
     # in readable structure in the tests.
