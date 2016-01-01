@@ -29,6 +29,7 @@ Package.onUse(function(api) {
     'source/assertions/extend.coffee',
     'source/assertions/to_match.coffee',
     'source/assertions/match-array-of-structs.coffee',
+    'source/assertions/contain-array-of-structs.coffee',
     'source/bdd/test-api.coffee',
     'source/bdd/aggregates-bdd-api.coffee',
     'source/bdd/stores-bdd-api.coffee',
