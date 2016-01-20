@@ -6,10 +6,7 @@ Helpers for Testing Space Applications and Modules.
 `meteor add space:testing`
 
 ## Run the tests
-`mrt test-packages ./`
-
-## Release History
-* 1.0.0 - Publish first version to Meteor package system
+`meteor test-packages ./`
 
 ## License
 Licensed under the MIT license.

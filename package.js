@@ -8,7 +8,7 @@ Package.describe({
 
 Package.onUse(function(api) {
 
-  api.versionsFrom("METEOR@1.0");
+  api.versionsFrom('1.2.0.1');
 
   api.use([
     'coffeescript',
@@ -19,7 +19,6 @@ Package.onUse(function(api) {
     'check',
     'ecmascript',
     'space:base@3.1.1',
-    'space:messaging@2.1.0',
     'practicalmeteor:munit@2.1.5'
   ]);
 
@@ -31,9 +30,7 @@ Package.onUse(function(api) {
     'source/assertions/to_match.coffee',
     'source/assertions/match-array-of-structs.coffee',
     'source/assertions/contain-array-of-structs.coffee',
-    'source/bdd/test-api.coffee',
-    'source/bdd/stores-bdd-api.coffee',
-    'source/bdd/messaging-api-bdd-api.coffee'
+    'source/bdd/test-api.coffee'
   ]);
 
 });
