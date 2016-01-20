@@ -21,6 +21,7 @@ Package.onUse(function(api) {
   ]);
 
   api.addFiles([
+    'source/environment.js',
     'source/helpers/is-subclass.coffee',
     'source/assertions/depend_on.coffee',
     'source/assertions/extend.coffee',
@@ -43,6 +44,7 @@ Package.onTest(function(api) {
   ]);
 
   api.addFiles([
+    'tests/environment.test.js',
     'tests/assertions/depend_on.integration.coffee',
     'tests/assertions/extend.spec.coffee',
     'tests/assertions/to_match.integration.coffee'
