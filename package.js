@@ -19,7 +19,6 @@ Package.onUse(function(api) {
     'check',
     'ecmascript',
     'space:base@3.1.1',
-    'space:messaging@2.1.0',
     'practicalmeteor:munit@2.1.5'
   ]);
 
