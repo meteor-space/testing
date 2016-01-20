@@ -31,8 +31,7 @@ Package.onUse(function(api) {
     'source/assertions/to_match.coffee',
     'source/assertions/match-array-of-structs.coffee',
     'source/assertions/contain-array-of-structs.coffee',
-    'source/bdd/test-api.coffee',
-    'source/bdd/stores-bdd-api.coffee'
+    'source/bdd/test-api.coffee'
   ]);
 
 });
