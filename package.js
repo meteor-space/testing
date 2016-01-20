@@ -19,6 +19,7 @@ Package.onUse(function(api) {
     'check',
     'ecmascript',
     'space:base@3.1.1',
+    'space:messaging@2.1.0',
     'practicalmeteor:munit@2.1.5'
   ]);
 
@@ -31,7 +32,6 @@ Package.onUse(function(api) {
     'source/assertions/match-array-of-structs.coffee',
     'source/assertions/contain-array-of-structs.coffee',
     'source/bdd/test-api.coffee',
-    'source/bdd/aggregates-bdd-api.coffee',
     'source/bdd/stores-bdd-api.coffee',
     'source/bdd/messaging-api-bdd-api.coffee'
   ]);
@@ -45,7 +45,6 @@ Package.onTest(function(api) {
     'check',
     'mongo',
     'underscore',
-    'space:event-sourcing@2.1.0',
     'space:testing',
     'practicalmeteor:munit@2.1.5'
   ]);
@@ -55,9 +54,5 @@ Package.onTest(function(api) {
     'tests/assertions/extend.spec.coffee',
     'tests/assertions/to_match.integration.coffee'
   ]);
-
-  api.addFiles([
-    'tests/bdd/aggregates-bdd-api.tests.coffee'
-  ], 'server');
 
 });

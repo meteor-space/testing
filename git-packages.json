@@ -1,18 +1,10 @@
 {
   "space:base": {
-    "git":"https://github.com/meteor-space/base.git",
-    "branch": "develop"
+    "git": "https://github.com/meteor-space/base.git",
+    "version": "80400f278c0ad911b8dee888eca4c54d979f1a1c"
   },
   "space:messaging": {
-    "git":"https://github.com/meteor-space/messaging.git",
-    "branch": "develop"
-  },
-  "space:event-sourcing": {
-    "git":"https://github.com/meteor-space/event-sourcing.git",
-    "branch": "develop"
-  },
-  "space:domain": {
-    "git":"https://github.com/meteor-space/domain.git",
-    "branch": "develop"
+    "git": "https://github.com/meteor-space/messaging.git",
+    "version": "ff0dfa578b2fcd39f167f3c51afc6d9ac7011ae3"
   }
 }
