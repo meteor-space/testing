@@ -1,0 +1,1 @@
+Meteor.isTesting = true;
