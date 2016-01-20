@@ -2,3 +2,4 @@
 .DS_Store
 packages
 local-packages.json
+.idea
