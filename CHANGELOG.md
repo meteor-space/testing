@@ -6,11 +6,11 @@ Changelog
 
 ### 2.0.0
 - Updates to all latest space packages
-- Removes depricated module testing api (not needed -> use BDD apis and
+- Removes depreciated module testing api (not needed -> use BDD APIs and
   integration tests instead)
 
 ### 1.5.0
-Adds improved BDD style api for event-sourced applications.
+Adds improved BDD style API for event-sourced applications.
 
 ### 1.4.4
 Adds dependency on underscore to fix problems.
