@@ -27,7 +27,7 @@ class ApiTest
       @_expectedCommands = expectedCommands
     @_test = =>
       @_callApi()
-      expect(@_sentCommands).matchArrayOfStructs @_expectedCommands
+      expect(@_sentCommands).containArrayOfStructs @_expectedCommands
     @_run()
 
   expectToFailWith: (expectedError) ->
