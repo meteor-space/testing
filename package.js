@@ -1,14 +1,14 @@
 Package.describe({
   summary: 'Helpers for Testing Space Applications and Modules.',
   name: 'space:testing',
-  version: '2.0.1',
+  version: '3.0.0',
   git: 'https://github.com/meteor-space/testing.git',
   debugOnly: true
 });
 
 Package.onUse(function(api) {
 
-  api.versionsFrom('1.2.0.1');
+  api.versionsFrom('1.0');
 
   api.use([
     'coffeescript',
@@ -17,7 +17,6 @@ Package.onUse(function(api) {
     'reactive-dict',
     'tracker',
     'check',
-    'ecmascript',
     'practicalmeteor:munit@2.1.5'
   ]);
 
@@ -27,7 +26,7 @@ Package.onUse(function(api) {
     'source/assertions/extend.coffee',
     'source/assertions/to_match.coffee',
     'source/assertions/match-array-of-structs.coffee',
-    'source/assertions/contain-array-of-structs.coffee',
+    'source/assertions/contain-array-of-structs.coffee'
   ]);
 
 });
