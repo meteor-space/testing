@@ -4,7 +4,7 @@ chai.use (chai, utils) ->
 
     actual = this._obj
 
-    untestedProperties = ['timestamp', 'version', 'meta', 'schemaVersion']
+    untestedProperties = ['timestamp', 'version', 'meta']
 
     for struct, index in actual
       for key, type of struct.fields()
