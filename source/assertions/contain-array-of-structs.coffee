@@ -9,7 +9,7 @@ chai.use (chai, utils) ->
       )
     )
 
-    untestedProperties = ['timestamp', 'version', 'meta']
+    untestedProperties = ['timestamp', 'version', 'meta', 'schemaVersion']
 
     for actualStruct, index in actual
       for key, type of actualStruct.fields()
