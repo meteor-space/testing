@@ -1,7 +1,7 @@
 Package.describe({
   summary: 'Helpers for Testing Space Applications and Modules.',
   name: 'space:testing',
-  version: '3.0.1',
+  version: '3.0.2',
   git: 'https://github.com/meteor-space/testing.git',
   debugOnly: true
 });
