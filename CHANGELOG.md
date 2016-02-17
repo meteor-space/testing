@@ -1,6 +1,9 @@
 Changelog
 =========
 
+### 3.0.2
+- Adds `schemaVersion` to `untestedProperties` in `matchArrayOfStructs` and `containArrayOfStructs` custom assertions.
+
 ### 3.0.1
 - Specific BDD APIs have been extracted from this release, now contained in separate packages following the naming convention `space:testing-{packageName}`
 - New chai assertions developed for use in Space BDD APIs to allow
