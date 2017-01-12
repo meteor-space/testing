@@ -1,0 +1,41 @@
+{
+  "name": "space-testing",
+  "version": "4.0.0",
+  "description": "Helpers for Testing Space Applications and Modules",
+  "main": "src/space-testing.js",
+  "keywords": [
+    "space",
+    "modular",
+    "architecture",
+    "testing"
+  ],
+  "author": "Dominik Guzei, Rhys Bartels-Waller, Darko Mijic, Adam Desivi",
+  "contributors": [
+    "Dominik Guzei (https://github.com/DominikGuzei)",
+    "Rhys Bartels-Waller (https://github.com/rhyslbw)",
+    "Darko Mijić (https://github.com/darko-mijic)",
+    "Adam Desivi (https://github.com/qejk)"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">= 4.0.x",
+    "npm": ">= 1.4.x"
+  },
+  "dependencies": {
+    "underscore": "^1.8.0",
+    "lodash": "^4.17.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.21.0",
+    "babel-cli": "^6.18.0",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-es2015": "^6.14.0",
+    "chai": "^3.5.0",
+    "sinon": "^1.17.7",
+    "mocha": "^3.2.0"
+  },
+  "scripts": {
+    "test": "mocha --require babel-core/register --recursive test/**/*.js",
+    "test-watch": "npm test -- --watch"
+  }
+}
