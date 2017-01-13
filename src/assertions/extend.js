@@ -1,27 +1,24 @@
 const isNil = require('lodash/isNil');
 const get = require('lodash/get');
 
-(function(plugin) {
-  if (
-    typeof require === "function" &&
-    typeof exports === "object" &&
-    typeof module === "object"
-  ) {
+(function(extend) {
+  "use strict";
+
+  // Module systems magic dance.
+  /* istanbul ignore else */
+  if (typeof require === "function" && typeof exports === "object" && typeof module === "object") {
     // NodeJS
-    module.exports = plugin;
-  } else if (
-    typeof define === "function" &&
-    define.amd
-  ) {
+    module.exports = extend;
+  } else if (typeof define === "function" && define.amd) {
     // AMD
     define(function() {
-      return plugin;
+      return extend;
     });
   } else {
     // Other environment (usually <script> tag): plug in to global chai instance directly.
-    chai.use(plugin);
+    chai.use(extend);
   }
-}(function(chai) {
+}(function extend(chai, utils) {
   chai.Assertion.addChainableMethod('extend', function(baseClass) {
     const actual = this._obj;
 

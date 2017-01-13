@@ -1,26 +1,23 @@
 const sinon = require('sinon');
 
-(function(plugin) {
-  if (
-    typeof require === "function" &&
-    typeof exports === "object" &&
-    typeof module === "object"
-  ) {
+(function(same) {
+  "use strict";
+
+  // Module systems magic dance.
+  /* istanbul ignore else */
+  if (typeof require === "function" && typeof exports === "object" && typeof module === "object") {
     // NodeJS
-    module.exports = plugin;
-  } else if (
-    typeof define === "function" &&
-    define.amd
-  ) {
+    module.exports = same;
+  } else if (typeof define === "function" && define.amd) {
     // AMD
     define(function() {
-      return plugin;
+      return same;
     });
   } else {
     // Other environment (usually <script> tag): plug in to global chai instance directly.
-    chai.use(plugin);
+    chai.use(same);
   }
-}(function(chai) {
+}(function same(chai, utils) {
   chai.Assertion.addChainableMethod('sameAs', function(expected) {
     const actual = this._obj;
     const actualStringified = JSON.stringify(actual, null, 2);

@@ -2,27 +2,24 @@ const _ = require('underscore');
 const ObjectEntries = require('lodash/entries');
 const ObjectKeys = require('lodash/keys');
 
-(function(plugin) {
-  if (
-    typeof require === "function" &&
-    typeof exports === "object" &&
-    typeof module === "object"
-  ) {
+(function(containArrayOfStructs) {
+  "use strict";
+
+  // Module systems magic dance.
+  /* istanbul ignore else */
+  if (typeof require === "function" && typeof exports === "object" && typeof module === "object") {
     // NodeJS
-    module.exports = plugin;
-  } else if (
-    typeof define === "function" &&
-    define.amd
-  ) {
+    module.exports = containArrayOfStructs;
+  } else if (typeof define === "function" && define.amd) {
     // AMD
     define(function() {
-      return plugin;
+      return containArrayOfStructs;
     });
   } else {
     // Other environment (usually <script> tag): plug in to global chai instance directly.
-    chai.use(plugin);
+    chai.use(containArrayOfStructs);
   }
-}(function(chai) {
+}(function containArrayOfStructs(chai, utils) {
   chai.Assertion.addMethod('containArrayOfStructs', function(expected) {
 
     // Filter out structs we don't need to test for

@@ -2,27 +2,24 @@ const _ = require('underscore');
 const ObjectEntries = require('lodash/entries');
 const ObjectKeys = require('lodash/keys');
 
-(function(plugin) {
-  if (
-    typeof require === "function" &&
-    typeof exports === "object" &&
-    typeof module === "object"
-  ) {
+(function(matchArrayOfStructs) {
+  "use strict";
+
+  // Module systems magic dance.
+  /* istanbul ignore else */
+  if (typeof require === "function" && typeof exports === "object" && typeof module === "object") {
     // NodeJS
-    module.exports = plugin;
-  } else if (
-    typeof define === "function" &&
-    define.amd
-  ) {
+    module.exports = matchArrayOfStructs;
+  } else if (typeof define === "function" && define.amd) {
     // AMD
     define(function() {
-      return plugin;
+      return matchArrayOfStructs;
     });
   } else {
     // Other environment (usually <script> tag): plug in to global chai instance directly.
-    chai.use(plugin);
+    chai.use(matchArrayOfStructs);
   }
-}(function(chai) {
+}(function matchArrayOfStructs(chai, utils) {
   chai.Assertion.addMethod('matchArrayOfStructs', function(expected) {
 
     const actual = this._obj;
@@ -64,5 +61,4 @@ const ObjectKeys = require('lodash/keys');
   chai.assert.notMatchArrayOfStructs = function(val, exp, msg) {
     new chai.Assertion(val, msg).to.not.matchArrayOfStructs(exp);
   };
-
 }));
