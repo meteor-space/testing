@@ -1,7 +1,4 @@
 {
-  "plugins": [
-    "add-module-exports",
-    "transform-es2015-for-of"
-  ],
+  "plugins": ["add-module-exports"],
   "presets": ["es2015"]
 }
