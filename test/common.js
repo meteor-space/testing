@@ -1,4 +1,9 @@
 const chai = require('chai');
 
+const spaceTesting = require('../lib/index.js');
+const chaiExtensions = spaceTesting.chai;
+
 global.expect = chai.expect;
-chai.use(require('../src/space-testing.js'));
+for (let key in chaiExtensions) {
+  chai.use(chaiExtensions[key]);
+}
