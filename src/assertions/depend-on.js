@@ -20,30 +20,26 @@
     const actual = this._obj;
 
     this.assert(
-      utils.type(actual.prototype.Dependencies) === 'object',
+      utils.type(actual.prototype.dependencies) === 'object',
       `expected ${actual} to declare dependencies`,
       "",
       dependencies,
-      actual.prototype.Dependencies
+      actual.prototype.dependencies
     );
 
     const expectedStringified = JSON.stringify(dependencies, null, 2);
-    const actualStringified = JSON.stringify(actual.prototype.Dependencies, null, 2);
+    const actualStringified = JSON.stringify(actual.prototype.dependencies, null, 2);
 
     return this.assert(
-      utils.eql(actual.prototype.Dependencies, dependencies),
+      utils.eql(actual.prototype.dependencies, dependencies),
       `expected ${actual} to depend on:\n${expectedStringified}\nbut was:\n${actualStringified}`,
-      "",
+      ``,
       dependencies,
-      actual.prototype.Dependencies
+      actual.prototype.dependencies
     );
   });
 
   chai.assert.dependOn = function(val, exp, msg) {
     new chai.Assertion(val, msg).to.dependOn(exp);
-  };
-
-  chai.assert.notDependOn = function(val, exp, msg) {
-    new chai.Assertion(val, msg).to.not.dependOn(exp);
   };
 }));
