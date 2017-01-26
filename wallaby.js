@@ -1,6 +1,5 @@
-const _ = require('underscore');
+const assign = require('lodash/assign');
 const fs = require('fs');
-
 
 let babelrc = null;
 let babelrcFile = null;
@@ -16,7 +15,7 @@ if (babelrcFile !== null) {babelrc = JSON.parse(babelrcFile);}
 module.exports = function(wallaby) {
   let babelConfig = {babel: require('babel-core')};
   if (babelrc) {
-    babelConfig = _.assign(babelConfig, babelrc);
+    babelConfig = assign(babelConfig, babelrc);
   }
   const babelCompiler = wallaby.compilers.babel(babelConfig);
   return {
@@ -38,7 +37,7 @@ module.exports = function(wallaby) {
       }
     },
     delays: {
-      run: 700
+      run: 1000
     }
   };
 };
