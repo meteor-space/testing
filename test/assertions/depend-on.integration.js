@@ -1,29 +1,30 @@
-describe('Space.testing', () => {
+import chai, {expect} from 'chai';
+import dependOn from '../../src/assertions/depend-on.js';
+const sinonChai = require("sinon-chai");
+chai.use(sinonChai);
+chai.use(dependOn);
 
-  describe('Classes', function() {
 
-    class TestClass {
-      static initClass() {
-        this.prototype.Dependencies = {
-          first: 'first',
-          second: 'second'
-        };
-      }
-    }
-    TestClass.initClass();
+import test from '../../src/index.js';
 
-    describe('#dependOn', function() {
+describe('dependOn', function() {
 
-      it('checks if a given class depends on other stuff', () =>
-        expect(TestClass).to.dependOn({
-          first: 'first',
-          second: 'second'
-        }));
+  class TestClass {}
+  TestClass.prototype.dependencies = {
+    first: 'first',
+    second: 'second'
+  };
 
-      it('throws nice error if expectations fail', function() {
-        const fail = () => expect(TestClass).to.dependOn({first: 'first'});
-        expect(fail).to.throw(Error);
-      });
+  it('checks if a given class depends on other stuff', () => {
+    expect(TestClass).to.dependOn({
+      first: 'first',
+      second: 'second'
     });
+  });
+
+  it('throws nice error if expectations fail', () => {
+    expect(() => {
+      expect(TestClass).to.dependOn({first: 'first'});
+    }).to.throw(Error);
   });
 });
