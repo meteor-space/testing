@@ -7,8 +7,8 @@ import dependOn from './assertions/depend-on.js';
 import containArrayOfStructs from './assertions/contain-array-of-structs.js';
 import matchArrayOfStructs from './assertions/match-array-of-structs.js';
 
-const extensions = {};
-extensions.chai = {
+const assertions = {};
+assertions.chai = {
   same: same,
   serializable: serializable,
   versionable: versionable,
@@ -19,13 +19,13 @@ extensions.chai = {
 };
 
 const spaceChai = function(chai) {
-  for (let extension of extensions.chai) {
-    chai.use(extension);
+  for (let assertion of Object.values(assertions.chai)) {
+    chai.use(assertion);
   }
 };
 
 export {
   isSubclassOf,
-  extensions as extensions,
+  assertions,
   spaceChai
 };
